@@ -1,0 +1,12 @@
+{
+  "name": "Pesca de Pejerrey - Viedma",
+  "short_name": "PescaPerjerrey",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "background_color": "#1a7abf",
+  "theme_color": "#1a7abf",
+  "orientation": "portrait",
+  "icons": [
+    { "src": "icon.png", "sizes": "192x192", "type": "image/png" }
+  ]
+}
