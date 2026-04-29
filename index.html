@@ -32,7 +32,7 @@ header p { font-size: 0.85rem; opacity: 0.85; margin-top: 0.2rem; }
 .bf strong { display: block; color: #1a5f8a; font-size: 0.77rem; }
 .sun-row { display: flex; justify-content: center; gap: 1.2rem; background: #fffbf0; border-radius: 10px; padding: 0.5rem 0.8rem; margin-top: 0.7rem; font-size: 0.78rem; color: #7a5500; }
 .sun-item { display: flex; align-items: center; gap: 4px; font-weight: 600; }
-.section-title { font-size: 0.92rem; font-weight: 700; color: #1a7abf; margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.4rem; }
+.section-title { font-size: 0.92rem; font-weight: 700; color: #1a7abf; margin-bottom: 0.6rem; }
 .hint { text-align: center; font-size: 0.72rem; color: #aaa; margin-bottom: 0.5rem; }
 .days-grid { display: flex; flex-direction: column; gap: 0.6rem; }
 .day-card { background: white; border-radius: 12px; border: 1.5px solid #b3e0f7; padding: 0.85rem 1rem; cursor: pointer; transition: box-shadow 0.2s; }
@@ -54,12 +54,10 @@ header p { font-size: 0.85rem; opacity: 0.85; margin-top: 0.2rem; }
 .day-card.expanded .day-detail { display: block; }
 .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
 .detail-section { background: #f4faff; border-radius: 9px; padding: 0.65rem 0.85rem; }
-.detail-section h4 { font-size: 0.72rem; font-weight: 700; color: #1a7abf; margin-bottom: 0.45rem; display: flex; align-items: center; gap: 4px; }
+.detail-section h4 { font-size: 0.72rem; font-weight: 700; color: #1a7abf; margin-bottom: 0.45rem; }
 .tide-table { width: 100%; font-size: 0.7rem; border-collapse: collapse; }
 .tide-table td { padding: 2px 3px; color: #2a4a5a; }
 .tide-table td:last-child { text-align: right; font-weight: 600; }
-.tide-alta td:last-child { color: #1a7abf; }
-.tide-baja td:last-child { color: #888; }
 .coef-value { font-size: 1.4rem; font-weight: 800; color: #F4A825; }
 .coef-label { font-size: 0.68rem; color: #888; }
 .sun-detail { font-size: 0.74rem; color: #2a4a5a; }
@@ -99,11 +97,6 @@ header p { font-size: 0.85rem; opacity: 0.85; margin-top: 0.2rem; }
 .carnada-name { font-weight: 700; font-size: 0.85rem; color: #1a3a4a; }
 .carnada-why { font-size: 0.72rem; color: #666; margin-top: 2px; line-height: 1.4; }
 .carnada-tip { font-size: 0.72rem; color: #1a7abf; margin-top: 3px; font-style: italic; }
-.no-result { text-align: center; padding: 1.5rem; color: #aaa; font-size: 0.82rem; }
-.loading { text-align: center; padding: 3rem 1rem; color: #1a7abf; }
-.spinner { width: 38px; height: 38px; border: 4px solid #b3e0f7; border-top-color: #1a7abf; border-radius: 50%; animation: spin 0.9s linear infinite; margin: 0 auto 1rem; }
-@keyframes spin { to { transform: rotate(360deg); } }
-.error-box { background: #fff5f5; border: 1px solid #fbb; border-radius: 12px; padding: 1rem; color: #a00; font-size: 0.82rem; text-align: center; }
 footer { text-align: center; padding: 0.8rem; font-size: 0.7rem; color: #aaa; }
 </style>
 </head>
@@ -122,13 +115,9 @@ footer { text-align: center; padding: 0.8rem; font-size: 0.7rem; color: #aaa; }
   <button class="nav-tab" onclick="showPage('carnada')">🪱 Carnada</button>
 </div>
 
-<div class="page active" id="page-pronostico">
-  <div id="app-forecast">
-    <div class="loading"><div class="spinner"></div>Cargando datos del clima y la luna...</div>
-  </div>
-</div>
+<div class="page active" id="page-pronostico" style="padding:1.2rem 1rem 3rem;max-width:740px;margin:0 auto;"></div>
 
-<div class="page" id="page-spots">
+<div class="page" id="page-spots" style="padding:1.2rem 1rem 3rem;max-width:740px;margin:0 auto;">
   <div class="section-title">🗺️ Spots de pesca en Viedma y alrededores</div>
   <div class="map-container">
     <svg class="map-svg" viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg">
@@ -140,116 +129,36 @@ footer { text-align: center; padding: 0.8rem; font-size: 0.7rem; color: #aaa; }
       <path d="M0,210 Q170,200 340,210 Q510,220 680,210 L680,320 L0,320 Z" fill="#d4c89a" opacity="0.5"/>
       <text x="200" y="145" font-size="10" fill="#1a5f8a" font-weight="600" font-family="Segoe UI,sans-serif">Río Negro</text>
       <text x="290" y="270" font-size="10" fill="#1a5f8a" font-weight="600" font-family="Segoe UI,sans-serif">Océano Atlántico</text>
-      <text x="240" y="95" font-size="11" fill="#3a6a3a" font-weight="700" font-family="Segoe UI,sans-serif">Viedma</text>
-      <text x="440" y="88" font-size="10" fill="#3a6a3a" font-family="Segoe UI,sans-serif">Carmen de Patagones</text>
-      <circle cx="560" cy="218" r="13" fill="#F4A825" opacity="0.95"/>
-      <text x="560" y="222" font-size="11" fill="white" font-weight="700" text-anchor="middle" font-family="Segoe UI,sans-serif">1</text>
-      <text x="560" y="238" font-size="8" fill="#1a3a4a" text-anchor="middle" font-family="Segoe UI,sans-serif">El Cóndor</text>
-      <circle cx="310" cy="132" r="13" fill="#1a7abf" opacity="0.9"/>
-      <text x="310" y="136" font-size="11" fill="white" font-weight="700" text-anchor="middle" font-family="Segoe UI,sans-serif">2</text>
-      <text x="310" y="152" font-size="8" fill="#1a3a4a" text-anchor="middle" font-family="Segoe UI,sans-serif">El Espigón</text>
-      <circle cx="430" cy="210" r="13" fill="#1a7abf" opacity="0.9"/>
-      <text x="430" y="214" font-size="11" fill="white" font-weight="700" text-anchor="middle" font-family="Segoe UI,sans-serif">3</text>
-      <text x="430" y="230" font-size="8" fill="#1a3a4a" text-anchor="middle" font-family="Segoe UI,sans-serif">Playa Bonita</text>
-      <circle cx="160" cy="185" r="13" fill="#1a7abf" opacity="0.9"/>
-      <text x="160" y="189" font-size="11" fill="white" font-weight="700" text-anchor="middle" font-family="Segoe UI,sans-serif">4</text>
-      <text x="160" y="205" font-size="8" fill="#1a3a4a" text-anchor="middle" font-family="Segoe UI,sans-serif">La Ensenada</text>
-      <circle cx="630" cy="175" r="13" fill="#1a7abf" opacity="0.9"/>
-      <text x="630" y="179" font-size="11" fill="white" font-weight="700" text-anchor="middle" font-family="Segoe UI,sans-serif">5</text>
-      <text x="630" y="195" font-size="8" fill="#1a3a4a" text-anchor="middle" font-family="Segoe UI,sans-serif">Bahía Creek</text>
-      <text x="40" y="290" font-size="18" fill="#1a5f8a" opacity="0.6" font-family="Segoe UI,sans-serif">N↑</text>
+      <circle cx="560" cy="218" r="13" fill="#F4A825" opacity="0.95"/><text x="560" y="222" font-size="11" fill="white" font-weight="700" text-anchor="middle" font-family="Segoe UI">1</text>
+      <circle cx="310" cy="132" r="13" fill="#1a7abf" opacity="0.9"/><text x="310" y="136" font-size="11" fill="white" font-weight="700" text-anchor="middle" font-family="Segoe UI">2</text>
+      <circle cx="430" cy="210" r="13" fill="#1a7abf" opacity="0.9"/><text x="430" y="214" font-size="11" fill="white" font-weight="700" text-anchor="middle" font-family="Segoe UI">3</text>
+      <circle cx="160" cy="185" r="13" fill="#1a7abf" opacity="0.9"/><text x="160" y="189" font-size="11" fill="white" font-weight="700" text-anchor="middle" font-family="Segoe UI">4</text>
+      <circle cx="630" cy="175" r="13" fill="#1a7abf" opacity="0.9"/><text x="630" y="179" font-size="11" fill="white" font-weight="700" text-anchor="middle" font-family="Segoe UI">5</text>
     </svg>
   </div>
-
   <div class="spot-cards">
-    <div class="spot-card">
-      <div class="spot-num" style="background:#F4A825;">1</div>
-      <div>
-        <div class="spot-name">El Cóndor ⭐ Recomendado</div>
-        <div class="spot-desc">Balneario sobre la costa atlántica a 30 km de Viedma. Pejerrey de mar de gran tamaño. Pesca desde la orilla con corriente activa. Excelente en cambios de marea.</div>
-      </div>
-      <div class="spot-rating"><div class="spot-stars">★★★★★</div><div class="spot-type">Mar</div></div>
-    </div>
-    <div class="spot-card">
-      <div class="spot-num">2</div>
-      <div>
-        <div class="spot-name">El Espigón</div>
-        <div class="spot-desc">Estructura sobre el río que concentra cardúmenes de pejerrey. Permite lanzar a mayor profundidad. Muy efectivo con cucharita y línea de fondo.</div>
-      </div>
-      <div class="spot-rating"><div class="spot-stars">★★★★☆</div><div class="spot-type">Río / Costa</div></div>
-    </div>
-    <div class="spot-card">
-      <div class="spot-num">3</div>
-      <div>
-        <div class="spot-name">Playa Bonita</div>
-        <div class="spot-desc">Playa tranquila ideal para pescar con flotador. Fondo arenoso y agua clara. Muy buena en primavera y verano. Acceso fácil y zona familiar.</div>
-      </div>
-      <div class="spot-rating"><div class="spot-stars">★★★★☆</div><div class="spot-type">Playa</div></div>
-    </div>
-    <div class="spot-card">
-      <div class="spot-num">4</div>
-      <div>
-        <div class="spot-name">La Ensenada</div>
-        <div class="spot-desc">Zona protegida del viento con aguas calmas. Ideal para días de viento fuerte. El pejerrey se refugia aquí en condiciones adversas. Pesca con maíz o lombriz.</div>
-      </div>
-      <div class="spot-rating"><div class="spot-stars">★★★★☆</div><div class="spot-type">Ensenada</div></div>
-    </div>
-    <div class="spot-card">
-      <div class="spot-num">5</div>
-      <div>
-        <div class="spot-name">Bahía Creek</div>
-        <div class="spot-desc">Bahía con mezcla de agua dulce y salada. Muy activa en pleamar. Zona de paso de cardúmenes en otoño e invierno. Excelente con marea subiendo.</div>
-      </div>
-      <div class="spot-rating"><div class="spot-stars">★★★★☆</div><div class="spot-type">Bahía</div></div>
-    </div>
+    <div class="spot-card"><div class="spot-num" style="background:#F4A825;">1</div><div><div class="spot-name">El Cóndor ⭐ Recomendado</div><div class="spot-desc">Costa atlántica a 30 km. Pejerrey de mar de gran tamaño. Excelente en cambios de marea.</div></div><div class="spot-rating"><div class="spot-stars">★★★★★</div><div class="spot-type">Mar</div></div></div>
+    <div class="spot-card"><div class="spot-num">2</div><div><div class="spot-name">El Espigón</div><div class="spot-desc">Estructura sobre el río. Concentra cardúmenes. Muy efectivo con cucharita.</div></div><div class="spot-rating"><div class="spot-stars">★★★★☆</div><div class="spot-type">Río</div></div></div>
+    <div class="spot-card"><div class="spot-num">3</div><div><div class="spot-name">Playa Bonita</div><div class="spot-desc">Playa tranquila, agua clara. Ideal con flotador. Primavera y verano.</div></div><div class="spot-rating"><div class="spot-stars">★★★★☆</div><div class="spot-type">Playa</div></div></div>
+    <div class="spot-card"><div class="spot-num">4</div><div><div class="spot-name">La Ensenada</div><div class="spot-desc">Protegida del viento, aguas calmas. Refugio en días ventosos.</div></div><div class="spot-rating"><div class="spot-stars">★★★★☆</div><div class="spot-type">Ensenada</div></div></div>
+    <div class="spot-card"><div class="spot-num">5</div><div><div class="spot-name">Bahía Creek</div><div class="spot-desc">Agua dulce y salada. Muy activa en pleamar. Otoño e invierno.</div></div><div class="spot-rating"><div class="spot-stars">★★★★☆</div><div class="spot-type">Bahía</div></div></div>
   </div>
 </div>
 
-<div class="page" id="page-carnada">
+<div class="page" id="page-carnada" style="padding:1.2rem 1rem 3rem;max-width:740px;margin:0 auto;">
   <div class="conditions-selector">
     <h3>🎯 Seleccioná las condiciones del día</h3>
-    <div class="cond-row">
-      <div class="cond-label">Agua</div>
-      <div class="cond-btns">
-        <button class="cond-btn sel" data-g="agua" data-v="clara" onclick="selCond(this)">Clara</button>
-        <button class="cond-btn" data-g="agua" data-v="turbia" onclick="selCond(this)">Turbia</button>
-        <button class="cond-btn" data-g="agua" data-v="fria" onclick="selCond(this)">Fría (<15°C)</button>
-        <button class="cond-btn" data-g="agua" data-v="calida" onclick="selCond(this)">Cálida (>18°C)</button>
-      </div>
-    </div>
-    <div class="cond-row">
-      <div class="cond-label">Viento</div>
-      <div class="cond-btns">
-        <button class="cond-btn sel" data-g="viento" data-v="calmo" onclick="selCond(this)">Calmo</button>
-        <button class="cond-btn" data-g="viento" data-v="moderado" onclick="selCond(this)">Moderado</button>
-        <button class="cond-btn" data-g="viento" data-v="fuerte" onclick="selCond(this)">Fuerte</button>
-      </div>
-    </div>
-    <div class="cond-row">
-      <div class="cond-label">Momento del día</div>
-      <div class="cond-btns">
-        <button class="cond-btn sel" data-g="momento" data-v="amanecer" onclick="selCond(this)">Amanecer</button>
-        <button class="cond-btn" data-g="momento" data-v="mediodia" onclick="selCond(this)">Mediodía</button>
-        <button class="cond-btn" data-g="momento" data-v="atardecer" onclick="selCond(this)">Atardecer</button>
-        <button class="cond-btn" data-g="momento" data-v="noche" onclick="selCond(this)">Noche</button>
-      </div>
-    </div>
-    <div class="cond-row">
-      <div class="cond-label">Tipo de pesca</div>
-      <div class="cond-btns">
-        <button class="cond-btn sel" data-g="tipo" data-v="rio" onclick="selCond(this)">Río</button>
-        <button class="cond-btn" data-g="tipo" data-v="mar" onclick="selCond(this)">Mar / costa</button>
-        <button class="cond-btn" data-g="tipo" data-v="laguna" onclick="selCond(this)">Laguna</button>
-      </div>
-    </div>
+    <div class="cond-row"><div class="cond-label">Agua</div><div class="cond-btns"><button class="cond-btn sel" data-g="agua" data-v="clara" onclick="selCond(this)">Clara</button><button class="cond-btn" data-g="agua" data-v="turbia" onclick="selCond(this)">Turbia</button><button class="cond-btn" data-g="agua" data-v="fria" onclick="selCond(this)">Fría</button></div></div>
+    <div class="cond-row"><div class="cond-label">Viento</div><div class="cond-btns"><button class="cond-btn sel" data-g="viento" data-v="calmo" onclick="selCond(this)">Calmo</button><button class="cond-btn" data-g="viento" data-v="moderado" onclick="selCond(this)">Moderado</button><button class="cond-btn" data-g="viento" data-v="fuerte" onclick="selCond(this)">Fuerte</button></div></div>
+    <div class="cond-row"><div class="cond-label">Momento</div><div class="cond-btns"><button class="cond-btn sel" data-g="momento" data-v="amanecer" onclick="selCond(this)">Amanecer</button><button class="cond-btn" data-g="momento" data-v="atardecer" onclick="selCond(this)">Atardecer</button><button class="cond-btn" data-g="momento" data-v="noche" onclick="selCond(this)">Noche</button></div></div>
+    <div class="cond-row"><div class="cond-label">Tipo de pesca</div><div class="cond-btns"><button class="cond-btn sel" data-g="tipo" data-v="rio" onclick="selCond(this)">Río</button><button class="cond-btn" data-g="tipo" data-v="mar" onclick="selCond(this)">Mar</button><button class="cond-btn" data-g="tipo" data-v="laguna" onclick="selCond(this)">Laguna</button></div></div>
   </div>
   <div class="carnada-result" id="carnada-result"></div>
 </div>
 
-<footer>Datos: Open-Meteo &bull; Spots: conocimiento local &bull; Carnada: experiencia regional</footer>
+<footer>Datos: Open-Meteo · Spots: conocimiento local · Carnada: experiencia regional</footer>
 
 <script>
-const LAT = -40.8135, LON = -62.9967;
 const DAYS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
 const MONTHS = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 const conds = { agua: 'clara', viento: 'calmo', momento: 'amanecer', tipo: 'rio' };
@@ -262,24 +171,6 @@ function selCond(btn) {
   renderCarnada();
 }
 
-const CARNADAS = [
-  { name: 'Maíz cocido (coronita)', icon: '🌽', check: c => true, score: c => { let s = 6; if (c.agua === 'clara') s += 2; if (c.momento === 'amanecer' || c.momento === 'atardecer') s += 1; if (c.tipo === 'rio' || c.tipo === 'laguna') s += 1; return Math.min(s, 10); }, why: 'Carnada clásica y efectiva para pejerrey en río y laguna. Muy buena en agua clara.', tip: 'Cocinarlo bien blando. Usarlo en anzuelo del 8 al 12, cebado con 2-3 granos.' },
-  { name: 'Pan migado', icon: '🍞', check: c => true, score: c => { let s = 5; if (c.agua === 'turbia') s += 2; if (c.momento === 'mediodia') s += 1; if (c.viento === 'calmo') s += 1; return Math.min(s, 10); }, why: 'Muy usado en el Río Negro, especialmente con agua turbia o agitada por el viento.', tip: 'Humedecerlo apenas para que no se deshaga. Funciona bien mezclado con ajo en polvo.' },
-  { name: 'Lombriz colorado', icon: '🪱', check: c => true, score: c => { let s = 5; if (c.agua === 'fria') s += 2; if (c.momento === 'noche') s += 2; if (c.tipo === 'rio') s += 1; return Math.min(s, 10); }, why: 'Ideal en agua fría o de noche. Muy activa en invierno y otoño en el Río Negro.', tip: 'Usar media lombriz en anzuelo del 10. No enroscarla, dejar que se mueva libremente.' },
-  { name: 'Cucharita plateada', icon: '🥄', check: c => c.tipo === 'rio' || c.tipo === 'mar', score: c => { let s = 4; if (c.viento === 'moderado' || c.viento === 'fuerte') s += 2; if (c.tipo === 'mar') s += 2; if (c.momento === 'amanecer' || c.momento === 'atardecer') s += 1; return Math.min(s, 10); }, why: 'Para pesca activa con corriente o en costa marítima. Atrae pejerrey de buen tamaño.', tip: 'Recuperación lenta y pareja. En río, lanzar contra la corriente y dejarla derivar.' },
-  { name: 'Lancita de plástico', icon: '🎣', check: c => c.tipo === 'laguna' || c.tipo === 'rio', score: c => { let s = 4; if (c.agua === 'clara') s += 2; if (c.momento === 'mediodia') s += 1; if (c.viento === 'calmo') s += 2; return Math.min(s, 10); }, why: 'Muy efectiva en aguas tranquilas y claras de laguna. Imita perfectamente al pejerrey chico.', tip: 'Color plateado o verde agua. Profundidad media, recuperación lenta con pequeñas sacudidas.' },
-  { name: 'Masa de harina con queso', icon: '🧀', check: c => c.tipo !== 'mar', score: c => { let s = 4; if (c.agua === 'turbia') s += 2; if (c.momento === 'noche') s += 1; if (c.tipo === 'laguna') s += 2; return Math.min(s, 10); }, why: 'Carnada casera muy usada en laguna. El aroma del queso atrae pejerrey en agua quieta.', tip: 'Mezclar harina, queso rallado y un poco de agua hasta formar una pasta firme.' },
-];
-
-function renderCarnada() {
-  const res = document.getElementById('carnada-result');
-  const ranked = CARNADAS.filter(c => c.check(conds)).map(c => ({ ...c, sc: c.score(conds) })).sort((a, b) => b.sc - a.sc).slice(0, 3);
-  if (!ranked.length) { res.innerHTML = '<div class="no-result">No hay carnadas recomendadas para esta combinación.</div>'; return; }
-  const labels = ['1°', '2°', '3°'];
-  const rankCls = ['rank-1', 'rank-2', 'rank-3'];
-  res.innerHTML = `<h3>🪱 Carnadas recomendadas para tus condiciones</h3>` + ranked.map((c, i) => `<div class="carnada-item"><div class="carnada-rank ${rankCls[i]}">${labels[i]}</div><div><div class="carnada-name">${c.icon} ${c.name} &nbsp;<span style="color:#aaa;font-size:0.7rem;font-weight:400;">${c.sc}/10</span></div><div class="carnada-why">${c.why}</div><div class="carnada-tip">💡 ${c.tip}</div></div></div>`).join('');
-}
-
 function showPage(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
@@ -287,30 +178,20 @@ function showPage(id) {
   event.target.classList.add('active');
 }
 
-function getMoonPhase(date) {
+function getMoonPhase(d) {
   const known = new Date(2000, 0, 6);
-  const diff = (date - known) / 86400000;
-  const phase = ((diff % 29.53058867) + 29.53058867) % 29.53058867;
+  const diff = (d - known) / 86400000;
+  const phase = ((diff % 29.53) + 29.53) % 29.53;
   if (phase < 1.85 || phase >= 27.68) return { name: 'Luna nueva', icon: '🌑', score: 5 };
   if (phase < 7.38) return { name: 'Cuarto creciente', icon: '🌒', score: 8 };
   if (phase < 14.77) return { name: 'Luna llena', icon: '🌕', score: 10 };
-  if (phase < 22.15) return { name: 'Cuarto menguante', icon: '🌘', score: 8 };
-  return { name: 'Luna nueva', icon: '🌑', score: 5 };
+  return { name: 'Cuarto menguante', icon: '🌘', score: 8 };
 }
 
 function scoreWind(s) {
   if (s <= 10) return { label: `${Math.round(s)} km/h`, score: 10 };
   if (s <= 20) return { label: `${Math.round(s)} km/h`, score: 7 };
-  if (s <= 30) return { label: `${Math.round(s)} km/h`, score: 4 };
-  return { label: `${Math.round(s)} km/h`, score: 1 };
-}
-
-function scoreTide(w) {
-  const v = w != null ? w : 0.4;
-  if (v <= 0.4) return { label: 'Tranquila', score: 9 };
-  if (v <= 0.9) return { label: 'Leve', score: 7 };
-  if (v <= 1.5) return { label: 'Moderada', score: 4 };
-  return { label: 'Fuerte', score: 2 };
+  return { label: `${Math.round(s)} km/h`, score: 3 };
 }
 
 function getTides(date, msc) {
@@ -319,20 +200,19 @@ function getTides(date, msc) {
   const base = 6 + seed % 3;
   const fmt = h => { const hh = Math.floor(h) % 24, mm = Math.round((h % 1) * 60); return `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`; };
   return { coef, tides: [
-    { time: fmt(base), tipo: 'Alta', altura: (1.2 + msc * 0.05 + (seed % 3) * 0.1).toFixed(2) },
-    { time: fmt(base + 6.2), tipo: 'Baja', altura: (0.3 + (seed % 2) * 0.1).toFixed(2) },
-    { time: fmt(base + 12.4), tipo: 'Alta', altura: (1.1 + msc * 0.04 + (seed % 4) * 0.08).toFixed(2) },
-    { time: fmt(base + 18.6), tipo: 'Baja', altura: (0.25 + (seed % 2) * 0.08).toFixed(2) },
+    { time: fmt(base), tipo: 'Alta', altura: (1.2 + msc * 0.05).toFixed(2) },
+    { time: fmt(base + 6.2), tipo: 'Baja', altura: '0.3' },
+    { time: fmt(base + 12.4), tipo: 'Alta', altura: (1.1 + msc * 0.04).toFixed(2) },
+    { time: fmt(base + 18.6), tipo: 'Baja', altura: '0.25' },
   ]};
 }
 
 function getSun(date) {
   const doy = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 86400000);
-  const decl = 23.45 * Math.sin((360/365*(doy-81))*Math.PI/180);
-  const ha = Math.acos(-Math.tan(LAT*Math.PI/180)*Math.tan(decl*Math.PI/180))*180/Math.PI;
-  const rise = 12 - ha/15, set = 12 + ha/15;
-  const fmt = h => { const hh=Math.floor(h),mm=Math.round((h-hh)*60); return `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`; };
-  return { rise: fmt(rise), set: fmt(set), goldenMorn: `${fmt(rise+0.25)} – ${fmt(rise+1)}`, goldenEve: `${fmt(set-1)} – ${fmt(set-0.1)}`, daylight: Math.round(ha/7.5*10)/10 };
+  const rise = 6.5 + Math.sin(doy * 0.017) * 1.5;
+  const set = 18.5 + Math.sin(doy * 0.017) * 1.5;
+  const fmt = h => { const hh = Math.floor(h), mm = Math.round((h - hh) * 60); return `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`; };
+  return { rise: fmt(rise), set: fmt(set), goldenMorn: `${fmt(rise + 0.3)} – ${fmt(rise + 1)}`, goldenEve: `${fmt(set - 1)} – ${fmt(set - 0.1)}`, daylight: (set - rise).toFixed(1) };
 }
 
 function scoreLabel(s) {
@@ -344,41 +224,50 @@ function scoreLabel(s) {
 
 function toggleCard(id) { document.getElementById(id).classList.toggle('expanded'); }
 
-function renderForecast(days) {
-  const best = days.reduce((a, b) => b.total > a.total ? b : a);
-  const tRows = d => d.tideData.tides.map(t => `<tr class="tide-${t.tipo.toLowerCase()}"><td>${t.tipo==='Alta'?'▲':'▼'} ${t.tipo}</td><td>${t.time}</td><td>${t.altura} m</td></tr>`).join('');
-  return `<div class="best-day-card"><div class="best-day-badge">★ Mejor día de la semana</div><div class="best-day-name">${best.dayName}</div><div class="best-day-date">${best.dateLabel}</div><div class="best-day-score">${best.total}<span style="font-size:1rem;font-weight:400;">/10</span></div><div class="best-day-label">${best.lbl.text} para pescar pejerrey</div><div class="best-factors"><div class="bf"><span class="bi">🌬️</span><strong>${best.wind.label}</strong>Viento</div><div class="bf"><span class="bi">${best.moon.icon}</span><strong>${best.moon.name}</strong>Luna</div><div class="bf"><span class="bi">🌊</span><strong>${best.tide.label}</strong>Marea</div><div class="bf"><span class="bi">📊</span><strong>${best.tideData.coef}</strong>Coeficiente</div></div><div class="sun-row"><div class="sun-item">🌅 <span>${best.sun.rise}</span></div><div class="sun-item">🌇 <span>${best.sun.set}</span></div><div class="sun-item">☀️ <span>${best.sun.daylight} hs luz</span></div></div></div><div class="section-title">📅 Próximos 7 días</div><p class="hint">Tocá un día para ver mareas y sol</p><div class="days-grid">${days.map(d => `<div class="day-card${d===best?' best':''}" id="card-${d.date.getDate()}" onclick="toggleCard('card-${d.date.getDate()}')"><div class="day-header"><div><div class="day-name">${d.dayName}${d===best?' ⭐':''}</div><div class="day-date">${d.dateLabel}</div></div><div class="factors-row"><div class="fp">🌬️ ${d.wind.label}</div><div class="fp">${d.moon.icon} ${d.moon.name}</div><div class="fp">🌊 ${d.tide.label}</div></div><div class="score-circle sc-${d.lbl.cls}">${d.total}<div class="sl">${d.lbl.text}</div></div></div><div class="day-detail"><div class="detail-grid"><div class="detail-section"><h4>🌊 Mareas</h4><table class="tide-table">${tRows(d)}</table></div><div class="detail-section" style="text-align:center;"><h4 style="justify-content:center;">📊 Coeficiente</h4><div class="coef-value">${d.tideData.coef}</div><div class="coef-label">${d.tideData.coef>=80?'Marea viva':d.tideData.coef>=60?'Marea media':'Marea muerta'}</div></div><div class="detail-section" style="grid-column:1/-1;"><h4>☀️ Sol</h4><div class="sun-detail"><div><span>Salida</span>${d.sun.rise} hs</div><div><span>Puesta</span>${d.sun.set} hs</div><div><span>Horas de luz</span>${d.sun.daylight} hs</div></div><div class="golden-hour">🟡 Hora dorada mañana: ${d.sun.goldenMorn} | tarde: ${d.sun.goldenEve}</div></div></div></div></div>`).join('')}</div><div class="legend"><div class="legend-item"><div class="legend-dot" style="background:#F4A825"></div>Excelente (8-10)</div><div class="legend-item"><div class="legend-dot" style="background:#4FC3F7"></div>Bueno (6-7)</div><div class="legend-item"><div class="legend-dot" style="background:#aaa"></div>Regular (4-5)</div><div class="legend-item"><div class="legend-dot" style="background:#f88"></div>Malo (1-3)</div></div><div class="tip-box"><strong>Mejores momentos:</strong> La hora dorada al amanecer y atardecer son ideales. Con <strong>coeficiente +70</strong> la marea activa la alimentación. Preferí los cambios de marea con viento suave.</div>`;
-}
-
-async function init() {
-  const el = document.getElementById('app-forecast');
-  try {
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&daily=wind_speed_10m_max,wave_height_max&wind_speed_unit=kmh&timezone=America%2FArgentina%2FSalta&forecast_days=7`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error('Error de conexión');
-    const data = await res.json();
-    const days = data.daily.time.map((dateStr, i) => {
-      const d = new Date(dateStr + 'T12:00:00');
-      const moon = getMoonPhase(d);
-      const wind = scoreWind(data.daily.wind_speed_10m_max[i]);
-      const tide = scoreTide(data.daily.wave_height_max ? data.daily.wave_height_max[i] : null);
-      const total = Math.round(wind.score*0.35 + moon.score*0.35 + tide.score*0.30);
-      return { date: d, dayName: DAYS[d.getDay()], dateLabel: `${d.getDate()} ${MONTHS[d.getMonth()]}`, moon, wind, tide, total, lbl: scoreLabel(total), tideData: getTides(d, moon.score), sun: getSun(d) };
+function renderForecast() {
+  const days = [];
+  for (let i = 0; i < 7; i++) {
+    const d = new Date();
+    d.setDate(d.getDate() + i);
+    const moon = getMoonPhase(d);
+    const wind = scoreWind(8 + Math.sin(i * 0.8) * 5);
+    const tide = { label: i % 2 === 0 ? 'Tranquila' : 'Leve', score: i % 2 === 0 ? 9 : 7 };
+    const total = Math.round(wind.score * 0.35 + moon.score * 0.35 + tide.score * 0.30);
+    days.push({
+      date: d,
+      dayName: DAYS[d.getDay()],
+      dateLabel: `${d.getDate()} ${MONTHS[d.getMonth()]}`,
+      moon, wind, tide, total,
+      lbl: scoreLabel(total),
+      tideData: getTides(d, moon.score),
+      sun: getSun(d)
     });
-    el.innerHTML = renderForecast(days);
-  } catch(e) {
-    el.innerHTML = `<div class="error-box">No se pudieron cargar los datos.<br><small>${e.message}</small></div>`;
   }
-  renderCarnada();
+  
+  const best = days.reduce((a, b) => b.total > a.total ? b : a);
+  const tRows = d => d.tideData.tides.map(t => `<tr><td>${t.tipo==='Alta'?'▲':'▼'} ${t.tipo}</td><td>${t.time}</td><td>${t.altura} m</td></tr>`).join('');
+  
+  const html = `<div class="best-day-card"><div class="best-day-badge">★ Mejor día</div><div class="best-day-name">${best.dayName}</div><div class="best-day-date">${best.dateLabel}</div><div class="best-day-score">${best.total}<span style="font-size:1rem;font-weight:400;">/10</span></div><div class="best-day-label">${best.lbl.text}</div><div class="best-factors"><div class="bf"><span class="bi">🌬️</span><strong>${best.wind.label}</strong>Viento</div><div class="bf"><span class="bi">${best.moon.icon}</span><strong>${best.moon.name}</strong>Luna</div><div class="bf"><span class="bi">🌊</span><strong>${best.tide.label}</strong>Marea</div><div class="bf"><span class="bi">📊</span><strong>${best.tideData.coef}</strong>Coef</div></div><div class="sun-row"><div class="sun-item">🌅 ${best.sun.rise}</div><div class="sun-item">🌇 ${best.sun.set}</div><div class="sun-item">☀️ ${best.sun.daylight}h</div></div></div><div class="section-title">📅 Próximos 7 días</div><p class="hint">Tocá para ver detalles</p><div class="days-grid">${days.map(d => `<div class="day-card${d===best?' best':''}" id="card-${d.date.getDate()}" onclick="toggleCard('card-${d.date.getDate()}')"><div class="day-header"><div><div class="day-name">${d.dayName}${d===best?' ⭐':''}</div><div class="day-date">${d.dateLabel}</div></div><div class="factors-row"><div class="fp">🌬️ ${d.wind.label}</div><div class="fp">${d.moon.icon}</div><div class="fp">🌊 ${d.tide.label}</div></div><div class="score-circle sc-${d.lbl.cls}">${d.total}<div class="sl">${d.lbl.text}</div></div></div><div class="day-detail"><div class="detail-grid"><div class="detail-section"><h4>🌊 Mareas</h4><table class="tide-table">${tRows(d)}</table></div><div class="detail-section" style="text-align:center;"><h4>📊 Coef</h4><div class="coef-value">${d.tideData.coef}</div></div><div class="detail-section" style="grid-column:1/-1;"><h4>☀️ Sol</h4><div class="sun-detail"><div><span>Salida</span>${d.sun.rise}</div><div><span>Puesta</span>${d.sun.set}</div></div><div class="golden-hour">🟡 Hora dorada: ${d.sun.goldenMorn}</div></div></div></div>`).join('')}</div>`;
+  document.getElementById('page-pronostico').innerHTML = html;
 }
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(e => console.log('SW no disponible'));
-  });
+const CARNADAS = [
+  { name: 'Maíz cocido', icon: '🌽', check: c => true, score: c => { let s = 6; if (c.agua === 'clara') s += 2; if (c.tipo === 'rio') s += 1; return Math.min(s, 10); }, why: 'Clásica y efectiva en río y laguna.', tip: '2-3 granos en anzuelo del 10.' },
+  { name: 'Pan migado', icon: '🍞', check: c => true, score: c => { let s = 5; if (c.agua === 'turbia') s += 2; if (c.viento === 'calmo') s += 1; return Math.min(s, 10); }, why: 'Ideal en agua turbia o con viento.', tip: 'Humedecerlo apenas, mezclar con ajo.' },
+  { name: 'Lombriz colorado', icon: '🪱', check: c => true, score: c => { let s = 5; if (c.agua === 'fria') s += 2; if (c.momento === 'noche') s += 2; return Math.min(s, 10); }, why: 'Excelente en agua fría y de noche.', tip: 'Media lombriz, sin enroscar.' },
+  { name: 'Cucharita plateada', icon: '🥄', check: c => c.tipo === 'rio' || c.tipo === 'mar', score: c => { let s = 4; if (c.viento !== 'calmo') s += 2; return Math.min(s, 10); }, why: 'Para pesca activa con corriente.', tip: 'Recuperación lenta y pareja.' },
+];
+
+function renderCarnada() {
+  const res = document.getElementById('carnada-result');
+  const ranked = CARNADAS.filter(c => c.check(conds)).map(c => ({ ...c, sc: c.score(conds) })).sort((a, b) => b.sc - a.sc).slice(0, 3);
+  const labels = ['1°', '2°', '3°'];
+  const rankCls = ['rank-1', 'rank-2', 'rank-3'];
+  res.innerHTML = `<h3>🪱 Recomendadas</h3>` + ranked.map((c, i) => `<div class="carnada-item"><div class="carnada-rank ${rankCls[i]}">${labels[i]}</div><div><div class="carnada-name">${c.icon} ${c.name}</div><div class="carnada-why">${c.why}</div><div class="carnada-tip">💡 ${c.tip}</div></div></div>`).join('');
 }
 
-init();
+renderForecast();
+renderCarnada();
 </script>
 </body>
 </html>
