@@ -3,271 +3,242 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pesca de Pejerrey - Viedma</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#1a7abf">
-<meta name="mobile-web-app-capable" content="yes">
+<title>Pesca de Pejerrey</title>
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Segoe UI', sans-serif; background: linear-gradient(160deg, #e0f4fd 0%, #f0f8ff 60%, #fff8e7 100%); min-height: 100vh; color: #1a3a4a; }
-header { background: linear-gradient(135deg, #1a7abf 0%, #2196c4 60%, #0d5f9a 100%); color: white; padding: 1.8rem 1.5rem 1.5rem; text-align: center; }
-.fish-icon { font-size: 2.2rem; margin-bottom: 0.3rem; }
-header h1 { font-size: 1.5rem; font-weight: 700; }
-header p { font-size: 0.85rem; opacity: 0.85; margin-top: 0.2rem; }
-.location-badge { display: inline-block; margin-top: 0.5rem; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.35); border-radius: 20px; padding: 0.22rem 0.85rem; font-size: 0.78rem; font-weight: 600; }
-.nav-tabs { display: flex; background: white; border-bottom: 2px solid #b3e0f7; position: sticky; top: 0; z-index: 10; }
-.nav-tab { flex: 1; padding: 0.7rem 0.3rem; font-size: 0.78rem; font-weight: 600; background: none; border: none; cursor: pointer; color: #888; border-bottom: 3px solid transparent; margin-bottom: -2px; transition: color 0.2s; }
-.nav-tab.active { color: #1a7abf; border-bottom-color: #1a7abf; }
-.page { display: none; padding: 1.2rem 1rem 3rem; max-width: 740px; margin: 0 auto; }
-.page.active { display: block; }
-.best-day-card { background: white; border-radius: 16px; border: 2px solid #F4A825; padding: 1.3rem; margin-bottom: 1.3rem; box-shadow: 0 4px 20px rgba(244,168,37,0.13); text-align: center; position: relative; }
-.best-day-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: #F4A825; color: white; border-radius: 20px; padding: 0.2rem 1rem; font-size: 0.75rem; font-weight: 700; white-space: nowrap; }
-.best-day-name { font-size: 1.3rem; font-weight: 700; color: #1a7abf; }
-.best-day-date { font-size: 0.8rem; color: #888; margin-bottom: 0.6rem; }
-.best-day-score { font-size: 2.6rem; font-weight: 800; color: #F4A825; line-height: 1; }
-.best-day-label { font-size: 0.82rem; color: #1a7abf; font-weight: 600; margin-top: 0.2rem; margin-bottom: 0.8rem; }
-.best-factors { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; }
-.bf { text-align: center; font-size: 0.72rem; color: #555; }
-.bf .bi { font-size: 1.1rem; display: block; }
-.bf strong { display: block; color: #1a5f8a; font-size: 0.77rem; }
-.sun-row { display: flex; justify-content: center; gap: 1.2rem; background: #fffbf0; border-radius: 10px; padding: 0.5rem 0.8rem; margin-top: 0.7rem; font-size: 0.78rem; color: #7a5500; }
-.sun-item { display: flex; align-items: center; gap: 4px; font-weight: 600; }
-.section-title { font-size: 0.92rem; font-weight: 700; color: #1a7abf; margin-bottom: 0.6rem; }
-.hint { text-align: center; font-size: 0.72rem; color: #aaa; margin-bottom: 0.5rem; }
-.days-grid { display: flex; flex-direction: column; gap: 0.6rem; }
-.day-card { background: white; border-radius: 12px; border: 1.5px solid #b3e0f7; padding: 0.85rem 1rem; cursor: pointer; transition: box-shadow 0.2s; }
-.day-card:hover { box-shadow: 0 4px 14px rgba(79,195,247,0.15); }
-.day-card.best { border-color: #F4A825; background: #fffbf0; }
-.day-card.expanded { border-color: #1a7abf; }
-.day-header { display: grid; grid-template-columns: 78px 1fr auto; align-items: center; gap: 0.7rem; }
-.day-name { font-weight: 700; font-size: 0.9rem; }
-.day-date { font-size: 0.73rem; color: #888; }
-.factors-row { display: flex; gap: 0.35rem; flex-wrap: wrap; }
-.fp { display: flex; align-items: center; gap: 3px; background: #e8f6fd; border-radius: 20px; padding: 0.14rem 0.5rem; font-size: 0.68rem; color: #1a5f8a; font-weight: 500; }
-.score-circle { width: 48px; height: 48px; border-radius: 50%; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; flex-shrink: 0; }
-.score-circle .sl { font-size: 0.5rem; font-weight: 600; margin-top: 1px; }
-.sc-excelente { background: #fff3cc; color: #b07c00; }
-.sc-bueno { background: #d6f0fc; color: #1a7abf; }
-.sc-regular { background: #e8ede8; color: #4a6a4a; }
-.sc-malo { background: #ffe5e5; color: #b03a3a; }
-.day-detail { margin-top: 0.8rem; padding-top: 0.8rem; border-top: 1px solid #d0eaf7; display: none; }
-.day-card.expanded .day-detail { display: block; }
-.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
-.detail-section { background: #f4faff; border-radius: 9px; padding: 0.65rem 0.85rem; }
-.detail-section h4 { font-size: 0.72rem; font-weight: 700; color: #1a7abf; margin-bottom: 0.45rem; }
-.tide-table { width: 100%; font-size: 0.7rem; border-collapse: collapse; }
-.tide-table td { padding: 2px 3px; color: #2a4a5a; }
-.tide-table td:last-child { text-align: right; font-weight: 600; }
-.coef-value { font-size: 1.4rem; font-weight: 800; color: #F4A825; }
-.coef-label { font-size: 0.68rem; color: #888; }
-.sun-detail { font-size: 0.74rem; color: #2a4a5a; }
-.sun-detail div { display: flex; justify-content: space-between; margin-bottom: 2px; }
-.sun-detail span { font-weight: 600; color: #1a5f8a; }
-.golden-hour { font-size: 0.67rem; color: #c08000; margin-top: 4px; font-style: italic; }
-.legend { display: flex; gap: 0.7rem; flex-wrap: wrap; margin-top: 1rem; justify-content: center; }
-.legend-item { display: flex; align-items: center; gap: 4px; font-size: 0.72rem; color: #555; }
-.legend-dot { width: 10px; height: 10px; border-radius: 50%; }
-.tip-box { background: linear-gradient(135deg, #e0f4fd, #fef9e7); border: 1px solid #b3e0f7; border-radius: 12px; padding: 0.85rem 1rem; margin-top: 1rem; font-size: 0.78rem; color: #2a4a5a; line-height: 1.6; }
-.tip-box strong { color: #1a7abf; }
-.map-container { border-radius: 14px; overflow: hidden; border: 1.5px solid #b3e0f7; margin-bottom: 1.2rem; }
-.map-svg { width: 100%; height: 320px; background: #c8e6f5; }
-.spot-cards { display: flex; flex-direction: column; gap: 0.6rem; }
-.spot-card { background: white; border-radius: 12px; border: 1.5px solid #b3e0f7; padding: 0.85rem 1rem; display: grid; grid-template-columns: 36px 1fr auto; align-items: center; gap: 0.75rem; }
-.spot-num { width: 32px; height: 32px; border-radius: 50%; background: #1a7abf; color: white; font-weight: 700; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.spot-name { font-weight: 700; font-size: 0.88rem; color: #1a3a4a; }
-.spot-desc { font-size: 0.72rem; color: #666; margin-top: 2px; line-height: 1.4; }
-.spot-rating { text-align: center; }
-.spot-stars { color: #F4A825; font-size: 0.85rem; }
-.spot-type { font-size: 0.65rem; color: #888; }
-.conditions-selector { background: white; border-radius: 14px; border: 1.5px solid #b3e0f7; padding: 1rem; margin-bottom: 1rem; }
-.conditions-selector h3 { font-size: 0.88rem; font-weight: 700; color: #1a7abf; margin-bottom: 0.8rem; }
-.cond-row { margin-bottom: 0.7rem; }
-.cond-label { font-size: 0.75rem; color: #555; font-weight: 600; margin-bottom: 0.3rem; }
-.cond-btns { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-.cond-btn { padding: 0.3rem 0.7rem; border-radius: 20px; border: 1.5px solid #b3e0f7; background: white; font-size: 0.72rem; font-weight: 600; color: #555; cursor: pointer; transition: all 0.18s; }
-.cond-btn.sel { background: #1a7abf; color: white; border-color: #1a7abf; }
-.carnada-result { background: white; border-radius: 14px; border: 2px solid #4FC3F7; padding: 1.1rem; }
-.carnada-result h3 { font-size: 0.9rem; font-weight: 700; color: #1a7abf; margin-bottom: 0.8rem; }
-.carnada-item { display: flex; align-items: flex-start; gap: 0.7rem; padding: 0.65rem 0; border-bottom: 1px solid #e8f4fb; }
-.carnada-item:last-child { border-bottom: none; }
-.carnada-rank { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 800; flex-shrink: 0; }
-.rank-1 { background: #fff3cc; color: #b07c00; }
-.rank-2 { background: #d6f0fc; color: #1a7abf; }
-.rank-3 { background: #e8ede8; color: #4a6a4a; }
-.carnada-name { font-weight: 700; font-size: 0.85rem; color: #1a3a4a; }
-.carnada-why { font-size: 0.72rem; color: #666; margin-top: 2px; line-height: 1.4; }
-.carnada-tip { font-size: 0.72rem; color: #1a7abf; margin-top: 3px; font-style: italic; }
-footer { text-align: center; padding: 0.8rem; font-size: 0.7rem; color: #aaa; }
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Segoe UI',sans-serif;background:linear-gradient(160deg,#e0f4fd 0%,#f0f8ff 60%,#fff8e7 100%);min-height:100vh;color:#1a3a4a}
+header{background:linear-gradient(135deg,#1a7abf 0%,#2196c4 60%,#0d5f9a 100%);color:white;padding:2rem 1.5rem;text-align:center}
+header h1{font-size:1.8rem;margin-bottom:0.5rem}
+header p{font-size:0.9rem;opacity:0.9}
+.badge{display:inline-block;margin-top:0.8rem;background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:0.3rem 1rem;font-size:0.8rem;font-weight:600}
+.tabs{display:flex;background:white;border-bottom:2px solid #b3e0f7;position:sticky;top:0;z-index:100}
+.tab{flex:1;padding:1rem;font-size:0.85rem;font-weight:600;background:none;border:none;cursor:pointer;color:#888;border-bottom:3px solid transparent;margin-bottom:-2px;transition:0.2s}
+.tab.active{color:#1a7abf;border-bottom-color:#1a7abf}
+.container{max-width:700px;margin:0 auto;padding:1.5rem 1rem 3rem}
+.page{display:none}
+.page.active{display:block}
+.card{background:white;border-radius:14px;border:2px solid #F4A825;padding:1.5rem;margin-bottom:1.5rem;box-shadow:0 4px 20px rgba(244,168,37,0.1);text-align:center}
+.card-title{font-size:1.2rem;font-weight:700;color:#1a7abf;margin:0.5rem 0}
+.card-score{font-size:3rem;font-weight:800;color:#F4A825;line-height:1}
+.section-title{font-size:1rem;font-weight:700;color:#1a7abf;margin:1.5rem 0 1rem}
+.day-item{background:white;border:1.5px solid #b3e0f7;border-radius:12px;padding:1rem;margin-bottom:0.8rem;cursor:pointer}
+.day-item:hover{box-shadow:0 4px 14px rgba(79,195,247,0.2)}
+.day-header{display:flex;justify-content:space-between;align-items:center}
+.day-name{font-weight:700;font-size:1rem}
+.day-date{font-size:0.75rem;color:#888}
+.day-score{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:1.2rem}
+.score-9{background:#fff3cc;color:#b07c00}
+.score-7{background:#d6f0fc;color:#1a7abf}
+.score-5{background:#e8ede8;color:#4a6a4a}
+.score-3{background:#ffe5e5;color:#b03a3a}
+.details{margin-top:1rem;padding-top:1rem;border-top:1px solid #d0eaf7;display:none;font-size:0.85rem}
+.day-item.expanded .details{display:block}
+.spot-item{background:white;border:1.5px solid #b3e0f7;border-radius:12px;padding:1rem;margin-bottom:0.8rem;display:grid;grid-template-columns:40px 1fr auto;gap:1rem;align-items:start}
+.spot-num{width:40px;height:40px;border-radius:50%;background:#1a7abf;color:white;font-weight:700;display:flex;align-items:center;justify-content:center}
+.spot-name{font-weight:700;font-size:0.95rem;color:#1a3a4a}
+.spot-desc{font-size:0.8rem;color:#666;margin-top:0.3rem;line-height:1.4}
+.stars{color:#F4A825;font-size:0.9rem}
+.conditions{background:white;border:1.5px solid #b3e0f7;border-radius:12px;padding:1.2rem;margin-bottom:1rem}
+.cond-group{margin-bottom:1rem}
+.cond-label{font-size:0.75rem;font-weight:700;color:#1a7abf;margin-bottom:0.5rem}
+.btns{display:flex;gap:0.4rem;flex-wrap:wrap}
+.btn{padding:0.4rem 0.8rem;border:1.5px solid #b3e0f7;background:white;border-radius:20px;font-size:0.75rem;font-weight:600;color:#555;cursor:pointer;transition:0.2s}
+.btn.active{background:#1a7abf;color:white;border-color:#1a7abf}
+.carnada-list{background:white;border:2px solid #4FC3F7;border-radius:12px;padding:1.2rem}
+.carnada-item{padding:0.8rem 0;border-bottom:1px solid #e8f4fb}
+.carnada-item:last-child{border-bottom:none}
+.carnada-rank{width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-weight:800;font-size:0.8rem;margin-right:0.8rem}
+.rank-1{background:#fff3cc;color:#b07c00}
+.rank-2{background:#d6f0fc;color:#1a7abf}
+.rank-3{background:#e8ede8;color:#4a6a4a}
+.carnada-name{font-weight:700;font-size:0.9rem;color:#1a3a4a}
+.carnada-why{font-size:0.75rem;color:#666;margin-top:0.3rem}
+.carnada-tip{font-size:0.75rem;color:#1a7abf;margin-top:0.2rem;font-style:italic}
+footer{text-align:center;padding:1rem;font-size:0.7rem;color:#aaa}
 </style>
 </head>
 <body>
 
 <header>
-  <div class="fish-icon">🎣</div>
+  <div style="font-size:2.5rem;margin-bottom:0.5rem">🎣</div>
   <h1>Mejor Día para Pescar Pejerrey</h1>
-  <p>Clima real · Mareas · Spots · Carnada</p>
-  <div class="location-badge">📍 Viedma, Río Negro</div>
+  <p>Clima · Mareas · Spots · Carnada</p>
+  <div class="badge">📍 Viedma, Río Negro</div>
 </header>
 
-<div class="nav-tabs">
-  <button class="nav-tab active" onclick="showPage('pronostico')">📅 Pronóstico</button>
-  <button class="nav-tab" onclick="showPage('spots')">🗺️ Spots</button>
-  <button class="nav-tab" onclick="showPage('carnada')">🪱 Carnada</button>
+<div class="tabs">
+  <button class="tab active" onclick="switchTab('forecast')">📅 Pronóstico</button>
+  <button class="tab" onclick="switchTab('spots')">🗺️ Spots</button>
+  <button class="tab" onclick="switchTab('bait')">🪱 Carnada</button>
 </div>
 
-<div class="page active" id="page-pronostico" style="padding:1.2rem 1rem 3rem;max-width:740px;margin:0 auto;"></div>
-
-<div class="page" id="page-spots" style="padding:1.2rem 1rem 3rem;max-width:740px;margin:0 auto;">
-  <div class="section-title">🗺️ Spots de pesca en Viedma y alrededores</div>
-  <div class="map-container">
-    <svg class="map-svg" viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg">
-      <rect width="680" height="320" fill="#c8e6f5"/>
-      <path d="M0,120 Q80,100 160,110 Q240,115 300,105 Q360,95 420,100 Q480,108 540,95 Q600,85 680,90 L680,0 L0,0 Z" fill="#d4e8a8"/>
-      <path d="M0,130 Q100,118 200,125 Q300,130 400,120 Q500,112 600,118 Q640,120 680,115" stroke="#89c4e1" stroke-width="18" fill="none" opacity="0.7"/>
-      <rect x="0" y="200" width="680" height="120" fill="#a8d4f0" opacity="0.5"/>
-      <path d="M0,200 Q170,190 340,200 Q510,210 680,200" fill="#c8e6f5"/>
-      <path d="M0,210 Q170,200 340,210 Q510,220 680,210 L680,320 L0,320 Z" fill="#d4c89a" opacity="0.5"/>
-      <text x="200" y="145" font-size="10" fill="#1a5f8a" font-weight="600" font-family="Segoe UI,sans-serif">Río Negro</text>
-      <text x="290" y="270" font-size="10" fill="#1a5f8a" font-weight="600" font-family="Segoe UI,sans-serif">Océano Atlántico</text>
-      <circle cx="560" cy="218" r="13" fill="#F4A825" opacity="0.95"/><text x="560" y="222" font-size="11" fill="white" font-weight="700" text-anchor="middle" font-family="Segoe UI">1</text>
-      <circle cx="310" cy="132" r="13" fill="#1a7abf" opacity="0.9"/><text x="310" y="136" font-size="11" fill="white" font-weight="700" text-anchor="middle" font-family="Segoe UI">2</text>
-      <circle cx="430" cy="210" r="13" fill="#1a7abf" opacity="0.9"/><text x="430" y="214" font-size="11" fill="white" font-weight="700" text-anchor="middle" font-family="Segoe UI">3</text>
-      <circle cx="160" cy="185" r="13" fill="#1a7abf" opacity="0.9"/><text x="160" y="189" font-size="11" fill="white" font-weight="700" text-anchor="middle" font-family="Segoe UI">4</text>
-      <circle cx="630" cy="175" r="13" fill="#1a7abf" opacity="0.9"/><text x="630" y="179" font-size="11" fill="white" font-weight="700" text-anchor="middle" font-family="Segoe UI">5</text>
-    </svg>
-  </div>
-  <div class="spot-cards">
-    <div class="spot-card"><div class="spot-num" style="background:#F4A825;">1</div><div><div class="spot-name">El Cóndor ⭐ Recomendado</div><div class="spot-desc">Costa atlántica a 30 km. Pejerrey de mar de gran tamaño. Excelente en cambios de marea.</div></div><div class="spot-rating"><div class="spot-stars">★★★★★</div><div class="spot-type">Mar</div></div></div>
-    <div class="spot-card"><div class="spot-num">2</div><div><div class="spot-name">El Espigón</div><div class="spot-desc">Estructura sobre el río. Concentra cardúmenes. Muy efectivo con cucharita.</div></div><div class="spot-rating"><div class="spot-stars">★★★★☆</div><div class="spot-type">Río</div></div></div>
-    <div class="spot-card"><div class="spot-num">3</div><div><div class="spot-name">Playa Bonita</div><div class="spot-desc">Playa tranquila, agua clara. Ideal con flotador. Primavera y verano.</div></div><div class="spot-rating"><div class="spot-stars">★★★★☆</div><div class="spot-type">Playa</div></div></div>
-    <div class="spot-card"><div class="spot-num">4</div><div><div class="spot-name">La Ensenada</div><div class="spot-desc">Protegida del viento, aguas calmas. Refugio en días ventosos.</div></div><div class="spot-rating"><div class="spot-stars">★★★★☆</div><div class="spot-type">Ensenada</div></div></div>
-    <div class="spot-card"><div class="spot-num">5</div><div><div class="spot-name">Bahía Creek</div><div class="spot-desc">Agua dulce y salada. Muy activa en pleamar. Otoño e invierno.</div></div><div class="spot-rating"><div class="spot-stars">★★★★☆</div><div class="spot-type">Bahía</div></div></div>
-  </div>
+<div class="container">
+  <div id="forecast" class="page active"></div>
+  <div id="spots" class="page"></div>
+  <div id="bait" class="page"></div>
 </div>
 
-<div class="page" id="page-carnada" style="padding:1.2rem 1rem 3rem;max-width:740px;margin:0 auto;">
-  <div class="conditions-selector">
-    <h3>🎯 Seleccioná las condiciones del día</h3>
-    <div class="cond-row"><div class="cond-label">Agua</div><div class="cond-btns"><button class="cond-btn sel" data-g="agua" data-v="clara" onclick="selCond(this)">Clara</button><button class="cond-btn" data-g="agua" data-v="turbia" onclick="selCond(this)">Turbia</button><button class="cond-btn" data-g="agua" data-v="fria" onclick="selCond(this)">Fría</button></div></div>
-    <div class="cond-row"><div class="cond-label">Viento</div><div class="cond-btns"><button class="cond-btn sel" data-g="viento" data-v="calmo" onclick="selCond(this)">Calmo</button><button class="cond-btn" data-g="viento" data-v="moderado" onclick="selCond(this)">Moderado</button><button class="cond-btn" data-g="viento" data-v="fuerte" onclick="selCond(this)">Fuerte</button></div></div>
-    <div class="cond-row"><div class="cond-label">Momento</div><div class="cond-btns"><button class="cond-btn sel" data-g="momento" data-v="amanecer" onclick="selCond(this)">Amanecer</button><button class="cond-btn" data-g="momento" data-v="atardecer" onclick="selCond(this)">Atardecer</button><button class="cond-btn" data-g="momento" data-v="noche" onclick="selCond(this)">Noche</button></div></div>
-    <div class="cond-row"><div class="cond-label">Tipo de pesca</div><div class="cond-btns"><button class="cond-btn sel" data-g="tipo" data-v="rio" onclick="selCond(this)">Río</button><button class="cond-btn" data-g="tipo" data-v="mar" onclick="selCond(this)">Mar</button><button class="cond-btn" data-g="tipo" data-v="laguna" onclick="selCond(this)">Laguna</button></div></div>
-  </div>
-  <div class="carnada-result" id="carnada-result"></div>
-</div>
-
-<footer>Datos: Open-Meteo · Spots: conocimiento local · Carnada: experiencia regional</footer>
+<footer>Datos simulados · Spots: conocimiento local · Carnada: experiencia regional</footer>
 
 <script>
 const DAYS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'];
 const MONTHS = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
-const conds = { agua: 'clara', viento: 'calmo', momento: 'amanecer', tipo: 'rio' };
 
-function selCond(btn) {
-  const g = btn.dataset.g, v = btn.dataset.v;
-  conds[g] = v;
-  btn.closest('.cond-btns').querySelectorAll('.cond-btn').forEach(b => b.classList.remove('sel'));
-  btn.classList.add('sel');
-  renderCarnada();
-}
-
-function showPage(id) {
+function switchTab(id) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('page-' + id).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
   event.target.classList.add('active');
 }
 
-function getMoonPhase(d) {
+function toggleDay(id) {
+  document.getElementById(id).classList.toggle('expanded');
+}
+
+function getMoon(d) {
   const known = new Date(2000, 0, 6);
   const diff = (d - known) / 86400000;
   const phase = ((diff % 29.53) + 29.53) % 29.53;
-  if (phase < 1.85 || phase >= 27.68) return { name: 'Luna nueva', icon: '🌑', score: 5 };
-  if (phase < 7.38) return { name: 'Cuarto creciente', icon: '🌒', score: 8 };
-  if (phase < 14.77) return { name: 'Luna llena', icon: '🌕', score: 10 };
-  return { name: 'Cuarto menguante', icon: '🌘', score: 8 };
+  if (phase < 1.85 || phase >= 27.68) return {name: 'Luna nueva', icon: '🌑', score: 5};
+  if (phase < 7.38) return {name: 'Cuarto crec.', icon: '🌒', score: 8};
+  if (phase < 14.77) return {name: 'Luna llena', icon: '🌕', score: 10};
+  return {name: 'Cuarto meng.', icon: '🌘', score: 8};
 }
 
-function scoreWind(s) {
-  if (s <= 10) return { label: `${Math.round(s)} km/h`, score: 10 };
-  if (s <= 20) return { label: `${Math.round(s)} km/h`, score: 7 };
-  return { label: `${Math.round(s)} km/h`, score: 3 };
+function getWind(i) {
+  const w = 8 + Math.sin(i * 0.8) * 6;
+  return {label: Math.round(w) + ' km/h', score: w <= 10 ? 10 : w <= 20 ? 7 : 3};
 }
 
-function getTides(date, msc) {
-  const seed = date.getDate() + date.getMonth() * 31;
-  const coef = msc >= 9 ? (75 + seed % 25) : msc >= 7 ? (55 + seed % 20) : (35 + seed % 20);
-  const base = 6 + seed % 3;
-  const fmt = h => { const hh = Math.floor(h) % 24, mm = Math.round((h % 1) * 60); return `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`; };
-  return { coef, tides: [
-    { time: fmt(base), tipo: 'Alta', altura: (1.2 + msc * 0.05).toFixed(2) },
-    { time: fmt(base + 6.2), tipo: 'Baja', altura: '0.3' },
-    { time: fmt(base + 12.4), tipo: 'Alta', altura: (1.1 + msc * 0.04).toFixed(2) },
-    { time: fmt(base + 18.6), tipo: 'Baja', altura: '0.25' },
-  ]};
+function getScore(wind, moon) {
+  return Math.round(wind * 0.35 + moon * 0.35 + 8 * 0.30);
 }
-
-function getSun(date) {
-  const doy = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 86400000);
-  const rise = 6.5 + Math.sin(doy * 0.017) * 1.5;
-  const set = 18.5 + Math.sin(doy * 0.017) * 1.5;
-  const fmt = h => { const hh = Math.floor(h), mm = Math.round((h - hh) * 60); return `${String(hh).padStart(2,'0')}:${String(mm).padStart(2,'0')}`; };
-  return { rise: fmt(rise), set: fmt(set), goldenMorn: `${fmt(rise + 0.3)} – ${fmt(rise + 1)}`, goldenEve: `${fmt(set - 1)} – ${fmt(set - 0.1)}`, daylight: (set - rise).toFixed(1) };
-}
-
-function scoreLabel(s) {
-  if (s >= 8) return { text: 'Excelente', cls: 'excelente' };
-  if (s >= 6) return { text: 'Bueno', cls: 'bueno' };
-  if (s >= 4) return { text: 'Regular', cls: 'regular' };
-  return { text: 'Malo', cls: 'malo' };
-}
-
-function toggleCard(id) { document.getElementById(id).classList.toggle('expanded'); }
 
 function renderForecast() {
-  const days = [];
+  let html = '<div class="card"><div style="font-size:2.5rem;margin-bottom:0.3rem">⭐</div><div class="card-title">Mejor día de la semana</div><div style="font-size:0.9rem;color:#888;margin:0.5rem 0">Este fin de semana</div><div class="card-score">8<span style="font-size:1rem;font-weight:400">/10</span></div><div style="font-size:0.85rem;color:#1a7abf;margin:0.8rem 0">Excelente para pescar</div></div>';
+  html += '<div class="section-title">📅 Próximos 7 días</div>';
+  
   for (let i = 0; i < 7; i++) {
     const d = new Date();
     d.setDate(d.getDate() + i);
-    const moon = getMoonPhase(d);
-    const wind = scoreWind(8 + Math.sin(i * 0.8) * 5);
-    const tide = { label: i % 2 === 0 ? 'Tranquila' : 'Leve', score: i % 2 === 0 ? 9 : 7 };
-    const total = Math.round(wind.score * 0.35 + moon.score * 0.35 + tide.score * 0.30);
-    days.push({
-      date: d,
-      dayName: DAYS[d.getDay()],
-      dateLabel: `${d.getDate()} ${MONTHS[d.getMonth()]}`,
-      moon, wind, tide, total,
-      lbl: scoreLabel(total),
-      tideData: getTides(d, moon.score),
-      sun: getSun(d)
-    });
+    const moon = getMoon(d);
+    const wind = getWind(i);
+    const score = getScore(wind.score, moon.score);
+    const scoreClass = score >= 8 ? 'score-9' : score >= 6 ? 'score-7' : score >= 4 ? 'score-5' : 'score-3';
+    
+    html += `<div class="day-item" id="day-${i}" onclick="toggleDay('day-${i}')">
+      <div class="day-header">
+        <div>
+          <div class="day-name">${DAYS[d.getDay()]}${i===0 ? ' ⭐' : ''}</div>
+          <div class="day-date">${d.getDate()} ${MONTHS[d.getMonth()]}</div>
+        </div>
+        <div style="display:flex;gap:0.4rem;flex-wrap:wrap;font-size:0.7rem">
+          <span style="background:#e8f6fd;border-radius:20px;padding:0.2rem 0.5rem;color:#1a5f8a">${wind.label}</span>
+          <span style="background:#e8f6fd;border-radius:20px;padding:0.2rem 0.5rem;color:#1a5f8a">${moon.icon}</span>
+        </div>
+        <div class="day-score ${scoreClass}">${score}</div>
+      </div>
+      <div class="details">
+        <div><strong>Mareas:</strong> 06:30 Alta (1.2m) · 12:45 Baja (0.3m) · 19:00 Alta (1.1m)</div>
+        <div style="margin-top:0.5rem"><strong>Coef:</strong> ${75 - Math.abs(i - 3) * 10} (${75 - Math.abs(i - 3) * 10 >= 70 ? 'Viva' : 'Media'})</div>
+        <div style="margin-top:0.5rem"><strong>Sol:</strong> 🌅 06:45 · 🌇 19:15 · 🟡 Hora dorada: 06:50-07:50</div>
+      </div>
+    </div>`;
   }
   
-  const best = days.reduce((a, b) => b.total > a.total ? b : a);
-  const tRows = d => d.tideData.tides.map(t => `<tr><td>${t.tipo==='Alta'?'▲':'▼'} ${t.tipo}</td><td>${t.time}</td><td>${t.altura} m</td></tr>`).join('');
-  
-  const html = `<div class="best-day-card"><div class="best-day-badge">★ Mejor día</div><div class="best-day-name">${best.dayName}</div><div class="best-day-date">${best.dateLabel}</div><div class="best-day-score">${best.total}<span style="font-size:1rem;font-weight:400;">/10</span></div><div class="best-day-label">${best.lbl.text}</div><div class="best-factors"><div class="bf"><span class="bi">🌬️</span><strong>${best.wind.label}</strong>Viento</div><div class="bf"><span class="bi">${best.moon.icon}</span><strong>${best.moon.name}</strong>Luna</div><div class="bf"><span class="bi">🌊</span><strong>${best.tide.label}</strong>Marea</div><div class="bf"><span class="bi">📊</span><strong>${best.tideData.coef}</strong>Coef</div></div><div class="sun-row"><div class="sun-item">🌅 ${best.sun.rise}</div><div class="sun-item">🌇 ${best.sun.set}</div><div class="sun-item">☀️ ${best.sun.daylight}h</div></div></div><div class="section-title">📅 Próximos 7 días</div><p class="hint">Tocá para ver detalles</p><div class="days-grid">${days.map(d => `<div class="day-card${d===best?' best':''}" id="card-${d.date.getDate()}" onclick="toggleCard('card-${d.date.getDate()}')"><div class="day-header"><div><div class="day-name">${d.dayName}${d===best?' ⭐':''}</div><div class="day-date">${d.dateLabel}</div></div><div class="factors-row"><div class="fp">🌬️ ${d.wind.label}</div><div class="fp">${d.moon.icon}</div><div class="fp">🌊 ${d.tide.label}</div></div><div class="score-circle sc-${d.lbl.cls}">${d.total}<div class="sl">${d.lbl.text}</div></div></div><div class="day-detail"><div class="detail-grid"><div class="detail-section"><h4>🌊 Mareas</h4><table class="tide-table">${tRows(d)}</table></div><div class="detail-section" style="text-align:center;"><h4>📊 Coef</h4><div class="coef-value">${d.tideData.coef}</div></div><div class="detail-section" style="grid-column:1/-1;"><h4>☀️ Sol</h4><div class="sun-detail"><div><span>Salida</span>${d.sun.rise}</div><div><span>Puesta</span>${d.sun.set}</div></div><div class="golden-hour">🟡 Hora dorada: ${d.sun.goldenMorn}</div></div></div></div>`).join('')}</div>`;
-  document.getElementById('page-pronostico').innerHTML = html;
+  document.getElementById('forecast').innerHTML = html;
 }
 
-const CARNADAS = [
-  { name: 'Maíz cocido', icon: '🌽', check: c => true, score: c => { let s = 6; if (c.agua === 'clara') s += 2; if (c.tipo === 'rio') s += 1; return Math.min(s, 10); }, why: 'Clásica y efectiva en río y laguna.', tip: '2-3 granos en anzuelo del 10.' },
-  { name: 'Pan migado', icon: '🍞', check: c => true, score: c => { let s = 5; if (c.agua === 'turbia') s += 2; if (c.viento === 'calmo') s += 1; return Math.min(s, 10); }, why: 'Ideal en agua turbia o con viento.', tip: 'Humedecerlo apenas, mezclar con ajo.' },
-  { name: 'Lombriz colorado', icon: '🪱', check: c => true, score: c => { let s = 5; if (c.agua === 'fria') s += 2; if (c.momento === 'noche') s += 2; return Math.min(s, 10); }, why: 'Excelente en agua fría y de noche.', tip: 'Media lombriz, sin enroscar.' },
-  { name: 'Cucharita plateada', icon: '🥄', check: c => c.tipo === 'rio' || c.tipo === 'mar', score: c => { let s = 4; if (c.viento !== 'calmo') s += 2; return Math.min(s, 10); }, why: 'Para pesca activa con corriente.', tip: 'Recuperación lenta y pareja.' },
-];
+function renderSpots() {
+  const spots = [
+    {num: 1, name: 'El Cóndor ⭐', desc: 'Costa atlántica a 30 km. Pejerrey de mar de gran tamaño.', stars: 5, type: 'Mar'},
+    {num: 2, name: 'El Espigón', desc: 'Estructura sobre el río que concentra cardúmenes.', stars: 4, type: 'Río'},
+    {num: 3, name: 'Playa Bonita', desc: 'Playa tranquila con agua clara, ideal con flotador.', stars: 4, type: 'Playa'},
+    {num: 4, name: 'La Ensenada', desc: 'Zona protegida del viento, refugio en días ventosos.', stars: 4, type: 'Ensenada'},
+    {num: 5, name: 'Bahía Creek', desc: 'Mezcla agua dulce y salada. Activa en pleamar.', stars: 4, type: 'Bahía'},
+  ];
+  
+  let html = '';
+  spots.forEach(s => {
+    const stars = '★'.repeat(s.stars) + '☆'.repeat(5 - s.stars);
+    html += `<div class="spot-item"><div class="spot-num">${s.num}</div><div><div class="spot-name">${s.name}</div><div class="spot-desc">${s.desc}</div></div><div style="text-align:right"><div class="stars">${stars}</div><div style="font-size:0.7rem;color:#888">${s.type}</div></div></div>`;
+  });
+  
+  document.getElementById('spots').innerHTML = html;
+}
 
-function renderCarnada() {
-  const res = document.getElementById('carnada-result');
-  const ranked = CARNADAS.filter(c => c.check(conds)).map(c => ({ ...c, sc: c.score(conds) })).sort((a, b) => b.sc - a.sc).slice(0, 3);
-  const labels = ['1°', '2°', '3°'];
-  const rankCls = ['rank-1', 'rank-2', 'rank-3'];
-  res.innerHTML = `<h3>🪱 Recomendadas</h3>` + ranked.map((c, i) => `<div class="carnada-item"><div class="carnada-rank ${rankCls[i]}">${labels[i]}</div><div><div class="carnada-name">${c.icon} ${c.name}</div><div class="carnada-why">${c.why}</div><div class="carnada-tip">💡 ${c.tip}</div></div></div>`).join('');
+function renderBait() {
+  const conds = {agua: 'clara', viento: 'calmo', tipo: 'rio'};
+  
+  let html = `<div class="conditions">
+    <div class="cond-group">
+      <div class="cond-label">Agua</div>
+      <div class="btns">
+        <button class="btn active" onclick="updateBait('agua','clara',this)">Clara</button>
+        <button class="btn" onclick="updateBait('agua','turbia',this)">Turbia</button>
+        <button class="btn" onclick="updateBait('agua','fria',this)">Fría</button>
+      </div>
+    </div>
+    <div class="cond-group">
+      <div class="cond-label">Viento</div>
+      <div class="btns">
+        <button class="btn active" onclick="updateBait('viento','calmo',this)">Calmo</button>
+        <button class="btn" onclick="updateBait('viento','moderado',this)">Moderado</button>
+        <button class="btn" onclick="updateBait('viento','fuerte',this)">Fuerte</button>
+      </div>
+    </div>
+    <div class="cond-group">
+      <div class="cond-label">Tipo de pesca</div>
+      <div class="btns">
+        <button class="btn active" onclick="updateBait('tipo','rio',this)">Río</button>
+        <button class="btn" onclick="updateBait('tipo','mar',this)">Mar</button>
+        <button class="btn" onclick="updateBait('tipo','laguna',this)">Laguna</button>
+      </div>
+    </div>
+  </div>
+  
+  <div class="carnada-list" id="baits"></div>`;
+  
+  document.getElementById('bait').innerHTML = html;
+  renderBaitList(conds);
+}
+
+function renderBaitList(conds) {
+  const baits = [
+    {icon: '🌽', name: 'Maíz cocido', why: 'Clásica y efectiva.', tip: '2-3 granos en anzuelo del 10.', score: conds.agua === 'clara' ? 8 : 6},
+    {icon: '🍞', name: 'Pan migado', why: 'Ideal en agua turbia.', tip: 'Humedecer apenas.', score: conds.agua === 'turbia' ? 8 : 5},
+    {icon: '🪱', name: 'Lombriz', why: 'Excelente en agua fría.', tip: 'Media lombriz sin enroscar.', score: conds.agua === 'fria' ? 9 : 5},
+    {icon: '🥄', name: 'Cucharita', why: 'Pesca activa con corriente.', tip: 'Recuperación lenta.', score: conds.viento !== 'calmo' ? 8 : 5},
+  ].sort((a,b) => b.score - a.score);
+  
+  let html = '<h3 style="font-size:0.95rem;font-weight:700;color:#1a7abf;margin-bottom:1rem">🪱 Recomendadas</h3>';
+  baits.slice(0, 3).forEach((b, i) => {
+    const rankClass = ['rank-1', 'rank-2', 'rank-3'][i];
+    const labels = ['1°', '2°', '3°'];
+    html += `<div class="carnada-item">
+      <span class="carnada-rank ${rankClass}">${labels[i]}</span>
+      <div style="flex:1">
+        <div class="carnada-name">${b.icon} ${b.name}</div>
+        <div class="carnada-why">${b.why}</div>
+        <div class="carnada-tip">💡 ${b.tip}</div>
+      </div>
+    </div>`;
+  });
+  
+  document.getElementById('baits').innerHTML = html;
+}
+
+function updateBait(group, value, btn) {
+  btn.closest('.btns').querySelectorAll('.btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const conds = {agua: 'clara', viento: 'calmo', tipo: 'rio'};
+  conds[group] = value;
+  renderBaitList(conds);
 }
 
 renderForecast();
-renderCarnada();
+renderSpots();
+renderBait();
 </script>
 </body>
 </html>
