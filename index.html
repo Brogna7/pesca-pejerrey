@@ -110,7 +110,7 @@ const DAYS = ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábad
 const MONTHS = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
 
 async function loadWeather() {
-  const url = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&daily=wind_speed_10m_max,wave_height_max&wind_speed_unit=kmh&timezone=auto&forecast_days=7`;
+  const url = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&daily=wind_speed_10m_max,wave_height_max,temperature_2m_max,temperature_2m_min,apparent_temperature_max,apparent_temperature_min&wind_speed_unit=kmh&temperature_unit=celsius&timezone=auto&forecast_days=7`;
   try {
     const res = await fetch(url);
     if (!res.ok) throw new Error('Error API');
@@ -124,6 +124,10 @@ async function loadWeather() {
 function generateMockData() {
   const winds = [12, 15, 8, 18, 10, 14, 9];
   const waves = [0.6, 0.8, 0.4, 1.0, 0.5, 0.7, 0.45];
+  const temps = [18, 16, 19, 15, 20, 17, 18];
+  const tempMins = [14, 12, 15, 11, 16, 13, 14];
+  const feelsLike = [16, 14, 18, 12, 19, 15, 16];
+  const feelsLikeMins = [12, 10, 13, 9, 14, 11, 12];
   return {
     daily: {
       time: Array.from({length: 7}, (_, i) => {
@@ -132,7 +136,11 @@ function generateMockData() {
         return d.toISOString().split('T')[0];
       }),
       wind_speed_10m_max: winds,
-      wave_height_max: waves
+      wave_height_max: waves,
+      temperature_2m_max: temps,
+      temperature_2m_min: tempMins,
+      apparent_temperature_max: feelsLike,
+      apparent_temperature_min: feelsLikeMins
     }
   };
 }
@@ -237,6 +245,10 @@ async function renderForecast() {
       const moon = getMoonPhase(d);
       const wind = scoreWind(data.daily.wind_speed_10m_max[i]);
       const wave = scoreWave(data.daily.wave_height_max[i]);
+      const tempMax = data.daily.temperature_2m_max[i];
+      const tempMin = data.daily.temperature_2m_min[i];
+      const feelsMax = data.daily.apparent_temperature_max[i];
+      const feelsMin = data.daily.apparent_temperature_min[i];
       const total = Math.round(wind.score * 0.35 + moon.score * 0.35 + wave.score * 0.30);
       const lbl = scoreLabel(total);
       
@@ -245,6 +257,10 @@ async function renderForecast() {
         dayName: DAYS[d.getDay()],
         dateLabel: `${d.getDate()} ${MONTHS[d.getMonth()]}`,
         moon, wind, wave, total, lbl,
+        tempMax: Math.round(tempMax),
+        tempMin: Math.round(tempMin),
+        feelsMax: Math.round(feelsMax),
+        feelsMin: Math.round(feelsMin),
         tides: getTides(d),
         sun: getSunRiseSet(d),
         moonRiseSet: getMoonRiseSet(d)
@@ -263,6 +279,10 @@ async function renderForecast() {
         <div class="factor"><span class="factor-val">${best.wind.label}</span>🌬️ Viento</div>
         <div class="factor"><span class="factor-val">${best.wave.label}</span>🌊 Oleaje</div>
         <div class="factor"><span class="factor-val">${best.moon.illumination}%</span>${best.moon.icon} Luna</div>
+      </div>
+      <div style="background:#f0f8ff;border-radius:10px;padding:0.8rem;margin:0.8rem 0;font-size:0.85rem">
+        <div style="margin-bottom:0.5rem"><strong>🌡️ Temperatura:</strong> ${best.tempMax}°C / ${best.tempMin}°C</div>
+        <div><strong>❄️ Sensación térmica:</strong> ${best.feelsMax}°C / ${best.feelsMin}°C</div>
       </div>
       <div class="sun-row">
         <div class="sun-item">🌅 ${best.sun.rise}</div>
@@ -291,6 +311,7 @@ async function renderForecast() {
           <div class="day-score ${d.lbl.cls}">${d.total}</div>
         </div>
         <div class="details">
+          <strong>🌡️ Temperatura:</strong> ${d.tempMax}°C (siente ${d.feelsMax}°C) / ${d.tempMin}°C (siente ${d.feelsMin}°C)<br/>
           <strong>🌊 Mareas:</strong><br/>
           ${d.tides.tides.map(t => `<div class="tide-row">${t.tipo === 'Alta' ? '▲' : '▼'} <span class="tide-val">${t.time}</span> - ${t.altura}m</div>`).join('')}
           <strong>📊 Coeficiente:</strong> <span class="tide-val">${d.tides.coef}</span> (${d.tides.coef >= 70 ? 'Viva' : d.tides.coef >= 50 ? 'Media' : 'Muerta'})<br/>
