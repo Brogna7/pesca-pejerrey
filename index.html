@@ -369,11 +369,9 @@ function renderBait() {
 
 function renderBaitList(conds) {
   const baits = [
-    {icon: '🌽', name: 'Maíz cocido', why: 'Clásica pejerrey. Efectiva en mar y laguna.', tip: '2-3 granos, anzuelo 8-10', score: conds.agua === 'clara' ? 9 : 7},
-    {icon: '🍞', name: 'Pan migado', why: 'Excelente en agua turbia o con marejada.', tip: 'Humedecer apenas, mezclar con ajo', score: conds.agua === 'turbia' ? 9 : 6},
-    {icon: '🪱', name: 'Lombriz colorada', why: 'Ideal agua fría. Muy activa en invierno.', tip: 'Media lombriz, sin enroscar', score: conds.agua === 'fria' ? 9 : 6},
-    {icon: '🥄', name: 'Cucharita plateada', why: 'Pesca activa, ideal con viento y corriente.', tip: 'Recuperación lenta, pequeñas sacudidas', score: conds.viento !== 'calmo' ? 8 : 5},
-    {icon: '🎣', name: 'Lancita de plástico', why: 'Excelente agua clara. Imita pejerrey chico.', tip: 'Plateado o verde agua, profundidad media', score: conds.agua === 'clara' ? 8 : 5},
+    {icon: '🦐', name: 'Langostino blanco', why: 'Carnada viva o fresca. Excelente para pejerrey de buen tamaño.', tip: 'Enhebrar en el anzuelo sin dañarlo', score: conds.tipo === 'mar' ? 10 : 8},
+    {icon: '🦐', name: 'Camarón pintado c/ aceite bonito', why: 'Atracción máxima. El aceite dispersa aroma en el agua.', tip: 'Usar 1-2 camarones, aceite bonito en polvo', score: conds.agua === 'turbia' ? 10 : 9},
+    {icon: '🥩', name: 'Magru', why: 'Carne fresca y económica. Muy efectiva en agua fría.', tip: 'Cortar en cubos pequeños, enhebrar bien', score: conds.agua === 'fria' ? 9 : 7},
   ].sort((a, b) => b.score - a.score);
   
   let html = '<h3 style="font-size:0.95rem;font-weight:700;color:#1a7abf;margin-bottom:1rem">🪱 Carnadas recomendadas</h3>';
